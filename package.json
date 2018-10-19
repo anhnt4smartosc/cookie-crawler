@@ -1,0 +1,16 @@
+{
+  "name": "com.cookiebot.crawler",
+  "version": "1.0.0",
+  "description": "Craw a page, get links and check if these links use cookies, get all kind of cookies and save.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tuananh1006",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "fs": "0.0.1-security",
+    "phantom": "^6.0.3"
+  }
+}
