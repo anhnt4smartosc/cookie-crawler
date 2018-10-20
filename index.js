@@ -8,7 +8,7 @@ const phantom = require('phantom');
         console.info('Requesting', requestData.url)
     });
 
-    const status = await page.open('http://eziland.vn/');
+    const status = await page.open('https://facebook.com/');
     console.log(status);
 
     const content = await page.property('content');
