@@ -1,24 +1,30 @@
+var scrapedText = new Promise(function(resolve) {
+    var selector = 'body';
+    var url = 'www.courts.com.sg/checkout/cart/';
 
-var finalLinks = [];
-
-function getAllLinks(url, sum) {
-    var page = require('webpage').create();
-    page.open(url, function(status) {
-        links = page.evaluate(function() {
-            return [].map.call(document.querySelectorAll('a'), function(link) {
-                return link.getAttribute('href');
+    phantom.create({
+      'web-security': false,
+      'ignore-ssl-rules': true,
+      'ssl-protocol': 'tlsv1',
+      'load-images': false
+    }, function (ph) {
+      ph.createPage(function (page) {
+        page.open(url, function (status) {
+          if (status == 'success') {
+            page.includeJs("/jquery.min.js", function (scriptUrl) {
+            page.evaluate(function (selector) {
+              return jQuery(selector).text();
+            }, function (result) {
+               var text = result;
+               ph.exit();
+               resolve(text);
+              }, selector);
             });
+          } else {
+            ph.exit();
+            resolve(status);
+          }
         });
-
-        links = links.filter(function(e) {
-            var link = new String(e);
-            return link.indexOf(url) !== -1;
-        });
-        sum.push(links);
-    });
-
-    return sum;
-}
-
-getAllLinks('http://eziland.vn/', finalLinks);
-console.log("Final Links", finalLinks);
+     });
+  });
+});

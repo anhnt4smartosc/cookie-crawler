@@ -7,8 +7,6 @@ const arguments = process.argv;
 const domain = arguments[2];
 const url = arguments[2] + '/';
 
-console.log("Processing ", domain);
-
 const collect_page_links = (url, links) => {
     // console.log("Requesting", url); 
     request(url, (error, response, html) => {
@@ -18,11 +16,9 @@ const collect_page_links = (url, links) => {
             //Lấy tất cả href của một site
             $('a').each( (i, e) => {
                 let href = $(e).attr('href');
-                
                 if(typeof href != 'undefined' && href.startsWith('/')) {
                     href = domain + href;
                 }
-
                 if(typeof href != 'undefined' && (href.startsWith(domain) || href.startsWith('/')) && links.indexOf(href) == -1) {
                     console.log(href);
                     links.push(href);
@@ -36,12 +32,4 @@ const collect_page_links = (url, links) => {
     return allLinks;
 }
 
-const promise = new Promise( (resolve, reject) => {
-    collect_page_links(url, allLinks);
-});
-
-promise.then(allLinks => {
-    console.log("Resolved", allLinks);
-}).catch(err => {
-    console.log(err);
-});
+collect_page_links(url, allLinks);
