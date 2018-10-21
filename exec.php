@@ -50,10 +50,10 @@ foreach($urls as $url) {
         if(substr( $line, 0, 13 ) === "FinalCookies:") {
             list($zero, $cookieStr) = explode('FinalCookies:', $line);
             $cookies = json_decode($cookieStr);
-
+            
             if(count($cookies)) {
                 foreach($cookies as $cookie) {
-                    $cookieManager->add($cookie);
+                    $cookieManager->add($cookie, $url);
                 }
             }
         }
